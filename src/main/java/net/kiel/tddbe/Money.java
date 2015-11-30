@@ -5,25 +5,29 @@ package net.kiel.tddbe;
  */
 public class Money {
     protected int amount;
-    protected String currency;
+    protected Currency currency;
 
-    public Money(int amount, String currency) {
+    public Money(int amount, Currency currency) {
         this.amount = amount;
         this.currency = currency;
     }
-
-    static Dollar dollar(int amount) {
-        return new Dollar(amount, "USD");
+    static Money dollar(int amount) {
+        return new Money(amount, Currency.USD);
     }
 
-    static Franc franc(int amount) {
-        return new Franc(amount, "CHF");
+    static Money franc(int amount) {
+        return new Money(amount, Currency.CHF);
     }
 
     public Money times(int multiply) {
         return new Money(amount * multiply, currency);
     }
-    public String currency() {
+
+    public Money plus(Money money) {
+        return new Money(amount + money.amount, currency);
+    }
+
+    public Currency currency() {
         return currency;
     }
 
@@ -36,5 +40,17 @@ public class Money {
     @Override
     public String toString() {
         return amount + "," + currency;
+    }
+
+    public enum Currency {
+        USD("USD"),
+        CHF("CHF");
+
+        private String value;
+        Currency(String value) {
+            this.value = value;
+        }
+
+
     }
 }

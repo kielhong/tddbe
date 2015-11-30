@@ -5,8 +5,12 @@ package net.kiel.tddbe;
  */
 public class Franc extends Money {
 
-    public Franc(int amount, String currency) {
+    public Franc(int amount, Currency currency) {
         super(amount, currency);
+    }
+
+    static Money franc(int amount) {
+        return new Money(amount, Currency.CHF);
     }
 }
 

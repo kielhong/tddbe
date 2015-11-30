@@ -1,9 +1,12 @@
 package net.kiel.tddbe;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import static org.hamcrest.CoreMatchers.is;
 import org.junit.Test;
 
 /**
@@ -12,34 +15,37 @@ import org.junit.Test;
 public class MoneyTest {
     @Test
     public void testMultiplication() {
-        Dollar five = Money.dollar(5);
+        Money five = Money.dollar(5);
 
-        assertEquals(Money.dollar(10), five.times(2));
-        assertEquals(Money.dollar(15), five.times(3));
+        assertThat(Money.dollar(10), is(five.times(2)));
+        assertThat(Money.dollar(15), is(five.times(3)));
     }
 
     @Test
     public void testEquality() {
-        assertTrue(Money.dollar(5).equals(Money.dollar(5)));
-        assertFalse(Money.dollar(5).equals(Money.dollar(6)));
-
-        assertTrue(Money.franc(5).equals(Money.franc(5)));
-        assertFalse(Money.franc(5).equals(Money.franc(6)));
-
-        assertFalse(Money.franc(5).equals(Money.dollar(5)));
+        assertThat(Money.dollar(5), is(Money.dollar(5)));
+        assertThat(Money.dollar(5), is(not(Money.dollar(6))));
+        assertThat(Money.franc(5), is(not(Money.dollar(5))));
     }
 
     @Test
     public void testFrancMultiplication() {
-        Franc five = Money.franc(5);
+        Money five = Money.franc(5);
 
-        assertEquals(Money.franc(10), five.times(2));
-        assertEquals(Money.franc(15), five.times(3));
+        assertThat(Money.franc(10), is(five.times(2)));
+        assertThat(Money.franc(15), is(five.times(3)));
     }
 
     @Test
     public void testCurrency() {
-        assertEquals("USD", Money.dollar(1).currency());
-        assertEquals("CHF", Money.franc(1).currency());
+        assertThat(Money.Currency.USD, is(Dollar.dollar(1).currency()));
+        assertThat(Money.Currency.CHF, is(Money.franc(1).currency()));
+    }
+
+    @Test
+    public void testPlus() {
+        assertThat(Money.dollar(5).plus(Money.dollar(5)), is(Money.dollar(10)));
+        assertThat(Money.franc(6).plus(Money.franc(7)), is(Money.franc(13)));
+//        assertThat(Money.dollar(5).plus(Money.franc(5)), is(Money.dollar(15)));
     }
 }
