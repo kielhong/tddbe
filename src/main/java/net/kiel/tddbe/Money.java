@@ -3,7 +3,7 @@ package net.kiel.tddbe;
 /**
  * Created by kiel on 2015. 11. 19..
  */
-public class Money {
+public class Money implements Expression {
     protected int amount;
     protected Currency currency;
 
@@ -23,8 +23,8 @@ public class Money {
         return new Money(amount * multiply, currency);
     }
 
-    public Money plus(Money money) {
-        return new Money(amount + money.amount, currency);
+    public Expression plus(Money addend) {
+        return new Money(amount + addend.amount, currency);
     }
 
     public Currency currency() {

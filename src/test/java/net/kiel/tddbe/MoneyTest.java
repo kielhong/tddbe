@@ -44,8 +44,19 @@ public class MoneyTest {
 
     @Test
     public void testPlus() {
+
         assertThat(Money.dollar(5).plus(Money.dollar(5)), is(Money.dollar(10)));
         assertThat(Money.franc(6).plus(Money.franc(7)), is(Money.franc(13)));
 //        assertThat(Money.dollar(5).plus(Money.franc(5)), is(Money.dollar(15)));
+    }
+
+    @Test
+    public void testSimpleAddition() {
+        Money five = Money.dollar(5);
+        Bank bank = new Bank();
+        Expression sum = five.plus(five);
+        Money reduced = bank.reduce(sum, Money.Currency.USD);
+        assertThat(reduced, is(Money.dollar(10)));
+
     }
 }
